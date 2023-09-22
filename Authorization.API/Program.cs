@@ -9,16 +9,17 @@ builder.Services.AddOptions()
     .AddHttpContextAccessor()
     .AddControllers();
 
+builder.Services.AddAuthenticationOptions();
+
 builder.Services.AddCustomDbContext(builder.Configuration)
     .AddCustomAuthentication(builder.Configuration);
 
-builder.Services.AddHelpers();
+builder.Services.AddHelpers()
+    .AddCustomServices();
 
 builder.Services.AddSwagger();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 
 app.UseSwagger();
 

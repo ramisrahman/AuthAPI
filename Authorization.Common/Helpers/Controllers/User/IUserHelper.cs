@@ -6,6 +6,6 @@ namespace Authorization.Common.Helpers.Controllers.User
     public interface IUserHelper
     {
         Task<UserResponse> RegisterUserAsync(UserRequest request);
-        Task<string> UserLoginAsync(UserRequest request);
+        Task<LoginResponse> UserLoginAsync(LoginRequest request);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Authorization.Common.Helpers.Controllers.User;
 using Authorization.Common.Models.Request;
 using Authorization.Common.Models.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Authorization.API.Controllers
@@ -20,8 +21,9 @@ namespace Authorization.API.Controllers
         public async Task<ActionResult<UserResponse>> RegisterUserAsync(UserRequest request) =>
             Ok(await _userHelper.RegisterUserAsync(request));
 
+        [Authorize]
         [HttpPost("login")]
-        public async Task<ActionResult<string>> UserLoginAsync(UserRequest request) =>
+        public async Task<ActionResult<LoginResponse>> UserLoginAsync(LoginRequest request) =>
             Ok(await _userHelper.UserLoginAsync(request));
     }
 }

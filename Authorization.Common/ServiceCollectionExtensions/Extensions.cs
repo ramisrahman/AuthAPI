@@ -1,5 +1,6 @@
 ﻿using Authorization.Common.Database.Persistence;
 using Authorization.Common.Helpers.Controllers.User;
+using Authorization.Common.Services.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,8 +24,6 @@ namespace Authorization.Common.ServiceCollectionExtensions
 
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtKey = Encoding.ASCII.GetBytes(configuration.GetValue<string>("Auth:JwtKey"));
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -32,10 +31,12 @@ namespace Authorization.Common.ServiceCollectionExtensions
                     options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(jwtKey),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidIssuer = configuration.GetValue<string>("Authorize:Issuer"),
+                        ValidAudience = configuration.GetValue<string>("Authorize:Audience"),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("Authorize:SecretKey"))),
                     };
                 });
 
@@ -45,6 +46,12 @@ namespace Authorization.Common.ServiceCollectionExtensions
         public static IServiceCollection AddHelpers(this IServiceCollection services)
         {
             services.AddScoped<IUserHelper, UserHelper>();
+            return services;
+        }
+
+        public static IServiceCollection AddCustomServices(this IServiceCollection services)
+        {
+            services.AddScoped<IAuthenticationServices, AuthenticationServices>();
             return services;
         }
 
