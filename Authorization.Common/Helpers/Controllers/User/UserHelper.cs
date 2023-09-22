@@ -42,6 +42,7 @@ namespace Authorization.Common.Helpers.Controllers.User
                     await _context.SaveChangesAsync();
 
                     var response = entity.ToResponse();
+                    
                     return response;
                 }
                 throw new Exception("Email address is required");

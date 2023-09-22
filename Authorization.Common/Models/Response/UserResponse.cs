@@ -8,7 +8,6 @@ namespace Authorization.Common.Models.Response
         public string? EmailAddress { get; set; }
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }
-        public DateTime ExpiresAt { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
     }
