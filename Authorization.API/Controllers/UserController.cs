@@ -1,4 +1,6 @@
 ﻿using Authorization.Common.Helpers.Controllers.User;
+using Authorization.Common.Models.Request;
+using Authorization.Common.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Authorization.API.Controllers
@@ -15,16 +17,11 @@ namespace Authorization.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register()
-        {
-            await _userHelper.RegisterUser();
-            return Ok();
-        }
+        public async Task<ActionResult<UserResponse>> RegisterUserAsync(UserRequest request) =>
+            Ok(await _userHelper.RegisterUserAsync(request));
 
         [HttpPost("login")]
-        public ActionResult Login()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ActionResult<string>> UserLoginAsync(UserRequest request) =>
+            Ok(await _userHelper.UserLoginAsync(request));
     }
 }
