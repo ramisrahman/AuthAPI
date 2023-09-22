@@ -1,5 +1,4 @@
-﻿
-using Authorization.Common.Models.Response;
+﻿using Authorization.Common.Models.Response;
 using System.Security.Claims;
 
 namespace Authorization.Common.Services.Authentication
