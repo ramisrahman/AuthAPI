@@ -12,6 +12,8 @@ builder.Services.AddOptions()
 builder.Services.AddCustomDbContext(builder.Configuration)
     .AddCustomAuthentication(builder.Configuration);
 
+builder.Services.AddHelpers();
+
 builder.Services.AddSwagger();
 
 var app = builder.Build();

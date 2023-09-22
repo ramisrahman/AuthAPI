@@ -1,4 +1,5 @@
 ﻿using Authorization.Common.Database.Persistence;
+using Authorization.Common.Helpers.Controllers.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,12 @@ namespace Authorization.Common.ServiceCollectionExtensions
                     };
                 });
 
+            return services;
+        }
+
+        public static IServiceCollection AddHelpers(this IServiceCollection services)
+        {
+            services.AddScoped<IUserHelper, UserHelper>();
             return services;
         }
 

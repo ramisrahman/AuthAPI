@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Authorization.Common.Helpers.Controllers.User;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Authorization.API.Controllers
 {
@@ -6,21 +7,24 @@ namespace Authorization.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        [HttpPost("register")]
-        public ActionResult Register()
+        private readonly IUserHelper _userHelper;
+
+        public UserController(IUserHelper userHelper)
         {
-            throw new NotImplementedException();
-            // Validate and register the user
-            // Hash the password and save it to the database
-            // Return a success message or error
+            _userHelper = userHelper;
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult> Register()
+        {
+            await _userHelper.RegisterUser();
+            return Ok();
         }
 
         [HttpPost("login")]
         public ActionResult Login()
         {
             throw new NotImplementedException();
-            // Validate credentials
-            // Generate and return a JWT token and refresh token upon successful login
         }
     }
 }
